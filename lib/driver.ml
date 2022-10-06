@@ -2,11 +2,10 @@ type obliv_array = int array
 
 let count = ref 0
 
+(* All parties are public in plaintext driver. *)
 let party_public = 0
-
-let party_alice = -1
-
-let party_bob = -1
+let party_alice = 0
+let party_bob = 0
 
 let setup_driver _ _ party =
   if party <> party_public
@@ -14,6 +13,10 @@ let setup_driver _ _ party =
                        public party (0)")
 
 let finalize_driver _ = ()
+
+let collect_stat _ = count := 0
+
+let report_stat _ = !count
 
 let obliv_array_new n = Array.make n 0
 
