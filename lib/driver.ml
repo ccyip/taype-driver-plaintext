@@ -34,17 +34,27 @@ let obliv_array_mux len b a1 a2 =
   then Array.sub a2 0 len
   else Array.sub a1 0 len
 
-let obliv_int_add m n = Array.make 1 (m.(0) + n.(0))
+let obliv_int_add m n = m.(0) + n.(0) |> Array.make 1
 
-let obliv_int_sub m n = Array.make 1 (m.(0) - n.(0))
+let obliv_int_sub m n = m.(0) - n.(0) |> Array.make 1
 
-let obliv_int_mul m n = Array.make 1 (m.(0) * n.(0))
+let obliv_int_mul m n = m.(0) * n.(0) |> Array.make 1
 
-let obliv_int_div m n = Array.make 1 (m.(0) / n.(0))
+let obliv_int_div m n = m.(0) / n.(0) |> Array.make 1
 
-let obliv_int_le m n = Array.make 1 (Bool.to_int (m.(0) <= n.(0)))
+let obliv_int_le m n = m.(0) <= n.(0) |> Bool.to_int |> Array.make 1
 
-let obliv_int_eq m n = Array.make 1 (Bool.to_int (m.(0) == n.(0)))
+let obliv_int_eq m n = m.(0) = n.(0) |> Bool.to_int |> Array.make 1
+
+let bool_of_int b = b <> 0
+
+let obliv_bool_not a = not (bool_of_int a.(0)) |> Bool.to_int |> Array.make 1
+
+let obliv_bool_and a b =
+  (bool_of_int a.(0) && bool_of_int b.(0)) |> Bool.to_int |> Array.make 1
+
+let obliv_bool_or a b =
+  (bool_of_int a.(0) || bool_of_int b.(0)) |> Bool.to_int |> Array.make 1
 
 let s_int n = Array.make 1 n
 
@@ -54,6 +64,6 @@ let private_s_int = s_int
 
 let unsafe_r_int a = a.(0)
 
-let unsafe_r_bool a = unsafe_r_int a <> 0
+let unsafe_r_bool a = unsafe_r_int a |> bool_of_int
 
 let unsafe_if a t e = if unsafe_r_bool a then t else e
