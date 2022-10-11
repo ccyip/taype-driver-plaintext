@@ -38,6 +38,10 @@ let obliv_int_add m n = Array.make 1 (m.(0) + n.(0))
 
 let obliv_int_sub m n = Array.make 1 (m.(0) - n.(0))
 
+let obliv_int_mul m n = Array.make 1 (m.(0) * n.(0))
+
+let obliv_int_div m n = Array.make 1 (m.(0) / n.(0))
+
 let obliv_int_le m n = Array.make 1 (Bool.to_int (m.(0) <= n.(0)))
 
 let obliv_int_eq m n = Array.make 1 (Bool.to_int (m.(0) == n.(0)))
