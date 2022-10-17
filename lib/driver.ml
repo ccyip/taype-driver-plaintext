@@ -40,7 +40,8 @@ let obliv_int_sub m n = m.(0) - n.(0) |> Array.make 1
 
 let obliv_int_mul m n = m.(0) * n.(0) |> Array.make 1
 
-let obliv_int_div m n = m.(0) / n.(0) |> Array.make 1
+let obliv_int_div m n =
+  (if n.(0) = 0 then (-1) else m.(0) / n.(0)) |> Array.make 1
 
 let obliv_int_le m n = m.(0) <= n.(0) |> Bool.to_int |> Array.make 1
 
