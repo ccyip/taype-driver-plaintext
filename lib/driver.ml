@@ -1,13 +1,21 @@
+open Sexplib
+
 type obliv_array = int array
 
+let print_obliv_array a =
+  Conv.sexp_of_array Conv.sexp_of_int a |> Sexp.to_string |> print_endline
+
 let count = ref 0
+
+let is_verbose = ref false
 
 (* All parties are public in plaintext driver. *)
 let party_public = 0
 let party_alice = 0
 let party_bob = 0
 
-let setup_driver _ _ party =
+let setup_driver ?(verbose=false) _ _ party =
+  is_verbose := verbose;
   if party <> party_public
   then raise (Failure "Unknown party: this driver only supports \
                        public party (0)")
@@ -29,6 +37,13 @@ let obliv_array_concat a1 a2 = Array.append a1 a2
 let obliv_array_slice a pos len = Array.sub a pos len
 
 let obliv_array_mux len b a1 a2 =
+  if !is_verbose
+  then begin
+    print_string "MUX "; print_int len; print_string " ";
+    print_int b.(0); print_newline ();
+    print_string "  "; print_obliv_array a1;
+    print_string "  "; print_obliv_array a2
+  end;
   count := !count + len;
   if b.(0) == 0
   then Array.sub a2 0 len

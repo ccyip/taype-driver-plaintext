@@ -1,3 +1,4 @@
 (library
  (name driver)
- (public_name taype-driver-plaintext))
+ (public_name taype-driver-plaintext)
+ (libraries sexplib))
