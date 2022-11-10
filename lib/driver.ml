@@ -36,7 +36,8 @@ let obliv_array_concat a1 a2 = Array.append a1 a2
 
 let obliv_array_slice a pos len = Array.sub a pos len
 
-let obliv_array_mux len b a1 a2 =
+let obliv_array_mux b a1 a2 =
+  let len = Array.length a1 in
   if !is_verbose
   then begin
     print_string "MUX "; print_int len; print_string " ";
