@@ -1,9 +1,12 @@
 open Sexplib
 
-type obliv_array = int array
+type obliv_array = int Slice.t
 
-let print_obliv_array a =
-  Conv.sexp_of_array Conv.sexp_of_int a |> Sexp.to_string |> print_endline
+let print_obliv_array (v : obliv_array) =
+  Conv.sexp_of_array Conv.sexp_of_int (Array.sub v.under v.pos v.len)
+  |> Sexp.to_string |> print_endline
+
+module Array = Slice
 
 let count = ref 0
 
@@ -46,9 +49,8 @@ let obliv_array_mux b a1 a2 =
     print_string "  "; print_obliv_array a2
   end;
   count := !count + len;
-  if b.(0) == 0
-  then Array.sub a2 0 len
-  else Array.sub a1 0 len
+  (* They should have the same length. *)
+  if b.(0) == 0 then a2 else a1
 
 let obliv_int_add m n = m.(0) + n.(0) |> Array.make 1
 
